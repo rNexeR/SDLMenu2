@@ -665,7 +665,7 @@
 1424454928 /home/turupawn/Projects/Clases/_Progra3/Beup2/Enemigo.h
 	"Personaje.h"
 
-1426215266 /home/turupawn/Projects/Clases/_Progra3/Beup2/Personaje.h
+1426270629 /home/turupawn/Projects/Clases/_Progra3/Beup2/Personaje.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<vector>

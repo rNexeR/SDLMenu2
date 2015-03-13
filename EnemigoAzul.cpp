@@ -6,9 +6,12 @@ EnemigoAzul::EnemigoAzul(SDL_Renderer* renderer, list<Personaje*> *personajes)
     mapa_texturas[ANIMACION_IDLE_LEFT] = new vector<SDL_Texture*>();
     mapa_texturas[ANIMACION_WALKING_RIGHT] = new vector<SDL_Texture*>();
     mapa_texturas[ANIMACION_WALKING_LEFT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_ATACANDO_STARTUP_RIGHT] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_RIGHT] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_RIGHT] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_ATACANDO_STARTUP_LEFT] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_LEFT] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_LEFT] = new vector<SDL_Texture*>();
 
     mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing/1.png"));
     mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing/2.png"));
@@ -32,11 +35,17 @@ EnemigoAzul::EnemigoAzul(SDL_Renderer* renderer, list<Personaje*> *personajes)
     mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk_left/4.png"));
     mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk_left/5.png"));
 
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch/1.png"));
+    mapa_texturas[ANIMACION_ATACANDO_STARTUP_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch/1.png"));
 
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch/2.png"));
+    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch/2.png"));
 
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch/3.png"));
+    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch/3.png"));
+
+    mapa_texturas[ANIMACION_ATACANDO_STARTUP_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch_left/1.png"));
+
+    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch_left/2.png"));
+
+    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch_left/3.png"));
 
 
     estado_actual = DERECHA;
@@ -164,7 +173,10 @@ void EnemigoAzul::act()
 
         case CERCA:
             estado = ATACANDO_STARTUP;
-            setAnimacion(ANIMACION_ATACANDO_STARTUP);
+            if(orientacion=='r')
+                setAnimacion(ANIMACION_ATACANDO_STARTUP_RIGHT);
+            else
+                setAnimacion(ANIMACION_ATACANDO_STARTUP_LEFT);
         break;
 
         case ATACANDO_STARTUP:
@@ -172,7 +184,10 @@ void EnemigoAzul::act()
             {
                 atacando = true;
                 cambiarEstado(ATACANDO_ACTIVE);
-                setAnimacion(ANIMACION_ATACANDO_ACTIVE);
+                if(orientacion=='r')
+                    setAnimacion(ANIMACION_ATACANDO_ACTIVE_RIGHT);
+                else
+                    setAnimacion(ANIMACION_ATACANDO_ACTIVE_LEFT);
             }
         break;
 
@@ -181,7 +196,10 @@ void EnemigoAzul::act()
             {
                 atacando = false;
                 cambiarEstado(ATACANDO_RECOVERY);
-                setAnimacion(ANIMACION_ATACANDO_RECOVERY);
+                if(orientacion=='r')
+                    setAnimacion(ANIMACION_ATACANDO_RECOVERY_RIGHT);
+                else
+                    setAnimacion(ANIMACION_ATACANDO_RECOVERY_LEFT);
             }
         break;
 
@@ -199,15 +217,19 @@ void EnemigoAzul::act()
             {
                 case ARRIBA:
                     setAnimacion(ANIMACION_WALKING_RIGHT);
+                    orientacion='r';
                 break;
                 case ABAJO:
                     setAnimacion(ANIMACION_WALKING_LEFT);
+                    orientacion='l';
                 break;
                 case DERECHA:
                     setAnimacion(ANIMACION_WALKING_RIGHT);
+                    orientacion='r';
                 break;
                 case IZQUIERDA:
                     setAnimacion(ANIMACION_WALKING_LEFT);
+                    orientacion='l';
                 break;
             }
 

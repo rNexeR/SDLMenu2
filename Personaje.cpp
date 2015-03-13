@@ -89,6 +89,7 @@ void Personaje::init(SDL_Renderer* renderer, list<Personaje*> *personajes)
 
     muerto = false;
     animacion_actual=ANIMACION_IDLE_RIGHT;
+    orientacion='r';
 }
 
 bool Personaje::colision(SDL_Rect param)

@@ -30,9 +30,12 @@ enum ANIMACIONES
     ANIMACION_IDLE_LEFT,
     ANIMACION_WALKING_RIGHT,
     ANIMACION_WALKING_LEFT,
-    ANIMACION_ATACANDO_STARTUP,
-    ANIMACION_ATACANDO_ACTIVE,
-    ANIMACION_ATACANDO_RECOVERY
+    ANIMACION_ATACANDO_STARTUP_RIGHT,
+    ANIMACION_ATACANDO_ACTIVE_RIGHT,
+    ANIMACION_ATACANDO_RECOVERY_RIGHT,
+    ANIMACION_ATACANDO_STARTUP_LEFT,
+    ANIMACION_ATACANDO_ACTIVE_LEFT,
+    ANIMACION_ATACANDO_RECOVERY_LEFT
 };
 
 class Personaje
@@ -49,6 +52,7 @@ class Personaje
         bool atacando;
         bool muerto;
         int animacion_actual;
+        char orientacion;
 
         virtual void draw(SDL_Renderer* renderer);
         virtual void act()=0;
