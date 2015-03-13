@@ -189,6 +189,7 @@ void EnemigoAzul::act()
             if(frame_estado%200==0)
             {
                 cambiarEstado(INICIO);
+                setAnimacion(ANIMACION_IDLE_RIGHT);
             }
         break;
 
