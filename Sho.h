@@ -9,6 +9,7 @@ class Sho : public Personaje
         Sho(SDL_Renderer* renderer,list<Personaje*> *personajes);
         void act();
         virtual ~Sho();
+        bool soySho();
     protected:
     private:
 };

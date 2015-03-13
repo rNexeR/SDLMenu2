@@ -2,45 +2,34 @@
 
 Sho::Sho(SDL_Renderer* renderer,list<Personaje*> *personajes)
 {
-    mapa_texturas["left"] = new vector<SDL_Texture*>();
-    mapa_texturas["right"] = new vector<SDL_Texture*>();
-    mapa_texturas["walk_right"] = new vector<SDL_Texture*>();
-    mapa_texturas["walk_left"] = new vector<SDL_Texture*>();
-    mapa_texturas["punch_right"] = new vector<SDL_Texture*>();
-    mapa_texturas["punch_left"] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_IDLE_RIGHT] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_IDLE_LEFT] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_WALKING_RIGHT] = new vector<SDL_Texture*>();
+    mapa_texturas[ANIMACION_WALKING_LEFT] = new vector<SDL_Texture*>();
 
-    mapa_texturas["right"]->push_back(IMG_LoadTexture(renderer,"Sho/standing/1.png"));
-    mapa_texturas["right"]->push_back(IMG_LoadTexture(renderer,"Sho/standing/2.png"));
-    mapa_texturas["right"]->push_back(IMG_LoadTexture(renderer,"Sho/standing/3.png"));
-    mapa_texturas["right"]->push_back(IMG_LoadTexture(renderer,"Sho/standing/4.png"));
+    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/standing/1.png"));
+    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/standing/2.png"));
+    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/standing/3.png"));
+    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/standing/4.png"));
 
-    mapa_texturas["left"]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/1.png"));
-    mapa_texturas["left"]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/2.png"));
-    mapa_texturas["left"]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/3.png"));
-    mapa_texturas["left"]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/4.png"));
+    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/1.png"));
+    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/2.png"));
+    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/3.png"));
+    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/4.png"));
 
-    mapa_texturas["walk_right"]->push_back(IMG_LoadTexture(renderer,"Sho/walk/1.png"));
-    mapa_texturas["walk_right"]->push_back(IMG_LoadTexture(renderer,"Sho/walk/2.png"));
-    mapa_texturas["walk_right"]->push_back(IMG_LoadTexture(renderer,"Sho/walk/3.png"));
-    mapa_texturas["walk_right"]->push_back(IMG_LoadTexture(renderer,"Sho/walk/4.png"));
-    mapa_texturas["walk_right"]->push_back(IMG_LoadTexture(renderer,"Sho/walk/5.png"));
+    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/1.png"));
+    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/2.png"));
+    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/3.png"));
+    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/4.png"));
+    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/5.png"));
 
-    mapa_texturas["walk_left"]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/1.png"));
-    mapa_texturas["walk_left"]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/2.png"));
-    mapa_texturas["walk_left"]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/3.png"));
-    mapa_texturas["walk_left"]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/4.png"));
-    mapa_texturas["walk_left"]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/5.png"));
+    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/1.png"));
+    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/2.png"));
+    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/3.png"));
+    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/4.png"));
+    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/5.png"));
 
-    mapa_texturas["punch_right"]->push_back(IMG_LoadTexture(renderer,"Sho/punch/1.png"));
-    mapa_texturas["punch_right"]->push_back(IMG_LoadTexture(renderer,"Sho/punch/2.png"));
-    mapa_texturas["punch_right"]->push_back(IMG_LoadTexture(renderer,"Sho/punch/3.png"));
-
-    mapa_texturas["punch_left"]->push_back(IMG_LoadTexture(renderer,"Sho/punch_left/1.png"));
-    mapa_texturas["punch_left"]->push_back(IMG_LoadTexture(renderer,"Sho/punch_left/2.png"));
-    mapa_texturas["punch_left"]->push_back(IMG_LoadTexture(renderer,"Sho/punch_left/3.png"));
-
-
-    vector_actual_str = "right";
+    estado_actual = DERECHA;
 
     rect.x = 0;
     rect.y = 0;
@@ -55,14 +44,14 @@ void Sho::act()
     if(currentKeyStates[SDL_SCANCODE_SPACE])
     {
         atacando = true;
-        if(vector_actual_str=="walk_right" || vector_actual_str=="right")
+        if(estado_actual==DERECHA || estado_actual==DERECHA)
         {
-            setAnimacion("punch_right");
+//            setAnimacion("punch_right");
         }
 
-        if(vector_actual_str=="walk_left" || vector_actual_str=="left")
+        if(estado_actual==IZQUIERDA || estado_actual==IZQUIERDA)
         {
-            setAnimacion("punch_left");
+//            setAnimacion("punch_left");
         }
     }else
     {
@@ -81,20 +70,20 @@ void Sho::act()
     if(currentKeyStates[SDL_SCANCODE_D])
     {
         rect.x++;
-        setAnimacion("walk_right");
+        setAnimacion(ANIMACION_WALKING_RIGHT);
     }
     else if(currentKeyStates[SDL_SCANCODE_Z])
     {
         rect.x--;
-        setAnimacion("walk_left");
+        setAnimacion(ANIMACION_WALKING_LEFT);
     }
     else
     {
-        if(vector_actual_str == "walk_right")
-            vector_actual_str = "right";
+        if(estado_actual == DERECHA)
+            estado_actual = DERECHA;
 
-        if(vector_actual_str == "walk_left")
-            vector_actual_str = "left";
+        if(estado_actual == IZQUIERDA)
+            estado_actual = IZQUIERDA;
     }
 
     attackCheck();
@@ -103,4 +92,9 @@ void Sho::act()
 Sho::~Sho()
 {
     //dtor
+}
+
+bool Sho::soySho()
+{
+    return true;
 }

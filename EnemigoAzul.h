@@ -6,6 +6,13 @@
 class EnemigoAzul : public Enemigo
 {
     public:
+        int estado;
+        int frame_estado;
+
+        int estadoRandom();
+        bool estoyCerca();
+        void cambiarEstado(int estado);
+
         EnemigoAzul(SDL_Renderer* renderer,list<Personaje*> *personajes);
         virtual ~EnemigoAzul();
 

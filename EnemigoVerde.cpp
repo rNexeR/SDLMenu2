@@ -15,10 +15,10 @@ EnemigoVerde::EnemigoVerde(SDL_Renderer* renderer, list<Personaje*> *personajes)
     texturas_left->push_back(IMG_LoadTexture(renderer,"EnemigoVerde/standing_left/3.png"));
     texturas_left->push_back(IMG_LoadTexture(renderer,"EnemigoVerde/standing_left/4.png"));
 
-    mapa_texturas["left"] = texturas_left;
-    mapa_texturas["right"] = texturas;
+    mapa_texturas[ANIMACION_IDLE_RIGHT] = texturas_left;
+    mapa_texturas[ANIMACION_IDLE_RIGHT] = texturas;
 
-    vector_actual_str = "right";
+    estado_actual = DERECHA;
 
     rect.x = 500;
     rect.y = 250;

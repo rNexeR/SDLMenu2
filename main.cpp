@@ -58,7 +58,8 @@ void loopJuego()
 
         if(frame%1000==0)
         {
-            personajes.push_back(new EnemigoAzul(renderer,&personajes));
+            Personaje *p = new EnemigoAzul(renderer,&personajes);
+            personajes.push_back(p);
         }
 
         for(list<Personaje*>::iterator p=personajes.begin();
