@@ -2,51 +2,28 @@
 
 EnemigoAzul::EnemigoAzul(SDL_Renderer* renderer, list<Personaje*> *personajes)
 {
-    mapa_texturas[ANIMACION_IDLE_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_IDLE_LEFT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_WALKING_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_WALKING_LEFT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP_LEFT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_LEFT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_LEFT] = new vector<SDL_Texture*>();
+    ifstream in("personaje_azul.txt");
 
-    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing/1.png"));
-    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing/2.png"));
-    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing/3.png"));
-    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing/4.png"));
+    if(!in)
+    {
+        cout<<"Error no se encontro el archivo!"<<endl;
+        return;
+    }
 
-    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing_left/1.png"));
-    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing_left/2.png"));
-    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing_left/3.png"));
-    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/standing_left/4.png"));
-
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk/1.png"));
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk/2.png"));
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk/3.png"));
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk/4.png"));
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk/5.png"));
-
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk_left/1.png"));
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk_left/2.png"));
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk_left/3.png"));
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk_left/4.png"));
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/walk_left/5.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch/1.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch/2.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_RIGHT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch/3.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch_left/1.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch_left/2.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_LEFT]->push_back(IMG_LoadTexture(renderer,"EnemigoAzul/punch_left/3.png"));
-
+    string animacion;
+    while(in>>animacion)
+    {
+        string llave;
+        in>>llave;
+        string path;
+        in>>path;
+        mapa_texturas[enumStringToInt(animacion)] = new vector<SDL_Texture*>();
+        while(path!="}")
+        {
+            mapa_texturas[enumStringToInt(animacion)]->push_back(IMG_LoadTexture(renderer,path.c_str()));
+            in>>path;
+        }
+    }
 
     estado_actual = DERECHA;
 
@@ -103,27 +80,6 @@ int EnemigoAzul::estadoRandom()
                 return DERECHA;
         }
     }
-
-//    int mi_random = rand()%5;
-//
-//    switch(mi_random)
-//    {
-//        case 0:
-//            return ARRIBA;
-//        break;
-//        case 1:
-//            return ABAJO;
-//        break;
-//        case 2:
-//            return IZQUIERDA;
-//        break;
-//        case 3:
-//            return DERECHA;
-//        break;
-//        case 4:
-//            return PARADO;
-//        break;
-//    }
 }
 
 bool EnemigoAzul::estoyCerca()

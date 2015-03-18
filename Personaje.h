@@ -65,6 +65,13 @@ class Personaje
 
         Personaje();
         virtual ~Personaje();
+
+
+
+        int enumStringToInt(string nombre);
+
+
+
     protected:
     private:
 };
