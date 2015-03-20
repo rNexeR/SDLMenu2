@@ -7,6 +7,7 @@
 #include <list>
 #include <iostream>
 #include <map>
+#include <fstream>
 using namespace std;
 
 enum Estados

@@ -2,50 +2,32 @@
 
 Sho::Sho(SDL_Renderer* renderer,list<Personaje*> *personajes)
 {
-    mapa_texturas[ANIMACION_IDLE_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_IDLE_LEFT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_WALKING_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_WALKING_LEFT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_RIGHT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP_LEFT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_LEFT] = new vector<SDL_Texture*>();
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_LEFT] = new vector<SDL_Texture*>();
+    ifstream in("sho.txt");
 
-    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/standing/1.png"));
-    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/standing/2.png"));
-    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/standing/3.png"));
-    mapa_texturas[ANIMACION_IDLE_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/standing/4.png"));
+    if(!in)
+    {
+        cout<<"Error no se encontro el archivo!"<<endl;
+        return;
+    }
 
-    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/1.png"));
-    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/2.png"));
-    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/3.png"));
-    mapa_texturas[ANIMACION_IDLE_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/standing_left/4.png"));
 
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/1.png"));
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/2.png"));
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/3.png"));
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/4.png"));
-    mapa_texturas[ANIMACION_WALKING_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/walk/5.png"));
 
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/1.png"));
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/2.png"));
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/3.png"));
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/4.png"));
-    mapa_texturas[ANIMACION_WALKING_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/walk_left/5.png"));
+    string animacion;
+    while(in>>animacion)
+    {
+        string llave;
+        in>>llave;
+        string path;
+        in>>path;
+        mapa_texturas[enumStringToInt(animacion)] = new vector<SDL_Texture*>();
+        while(path!="}")
+        {
+            mapa_texturas[enumStringToInt(animacion)]->push_back(IMG_LoadTexture(renderer,path.c_str()));
+            in>>path;
+        }
+    }
 
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/punch/1.png"));
 
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/punch/2.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_RIGHT]->push_back(IMG_LoadTexture(renderer,"Sho/punch/3.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_STARTUP_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/punch_left/1.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_ACTIVE_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/punch_left/2.png"));
-
-    mapa_texturas[ANIMACION_ATACANDO_RECOVERY_LEFT]->push_back(IMG_LoadTexture(renderer,"Sho/punch_left/3.png"));
 
     estado_actual = DERECHA;
 
@@ -151,7 +133,7 @@ void Sho::actMoving()
             rect.x++;
             setAnimacion(ANIMACION_WALKING_RIGHT);
         }
-        else if(currentKeyStates[SDL_SCANCODE_Z])
+        else if(currentKeyStates[SDL_SCANCODE_A])
         {
             orientacion='l';
             rect.x--;

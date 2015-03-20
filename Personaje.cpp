@@ -16,6 +16,8 @@ Personaje::~Personaje()
 void Personaje::draw(SDL_Renderer* renderer)
 {
     vector<SDL_Texture*> *vector_textura_actual_temp = mapa_texturas[animacion_actual];
+    //error aki
+    cout<<textura_actual_int<<endl;
     SDL_Texture* textura_actual_temp = (*vector_textura_actual_temp)[textura_actual_int];
     SDL_QueryTexture( textura_actual_temp, NULL, NULL, &rect.w, &rect.h);
     SDL_RenderCopy(renderer, textura_actual_temp, NULL, &rect);

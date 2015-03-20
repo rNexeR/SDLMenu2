@@ -2,7 +2,6 @@
 #define ENEMIGOAZUL_H
 
 #include "Enemigo.h"
-#include <fstream>
 
 class EnemigoAzul : public Enemigo
 {
